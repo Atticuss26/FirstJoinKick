@@ -1,0 +1,46 @@
+name: Build & Publish FirstJoinKick
+
+# Trigger on pushes to main or manual run
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build JAR with Maven
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Check out source code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. Set up Java (we target Java 17 / Minecraft 1.21.4 compatibility)
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: '17'  
+      :contentReference[oaicite:0]{index=0}
+
+      # 3. Cache Maven dependencies to speed up builds
+      - name: Cache Maven local repository
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}  
+      :contentReference[oaicite:1]{index=1}
+
+      # 4. Build the plugin JAR
+      - name: Build with Maven
+        run: mvn --batch-mode clean package  
+      :contentReference[oaicite:2]{index=2}
+
+      # 5. Upload the compiled JAR as an artifact
+      - name: Upload plugin artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: FirstJoinKick
+          path: target/FirstJoinKick-1.0.0.jar  
+      :contentReference[oaicite:3]{index=3}
