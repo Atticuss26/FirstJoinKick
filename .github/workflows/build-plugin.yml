@@ -1,6 +1,5 @@
 name: Build & Publish FirstJoinKick
 
-# Trigger on pushes to main or manual run
 on:
   push:
     branches: [ main ]
@@ -21,26 +20,22 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: temurin
-          java-version: '17'  
-      :contentReference[oaicite:0]{index=0}
+          java-version: '17'
 
       # 3. Cache Maven dependencies to speed up builds
       - name: Cache Maven local repository
         uses: actions/cache@v3
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}  
-      :contentReference[oaicite:1]{index=1}
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
 
       # 4. Build the plugin JAR
       - name: Build with Maven
-        run: mvn --batch-mode clean package  
-      :contentReference[oaicite:2]{index=2}
+        run: mvn --batch-mode clean package
 
       # 5. Upload the compiled JAR as an artifact
       - name: Upload plugin artifact
         uses: actions/upload-artifact@v3
         with:
           name: FirstJoinKick
-          path: target/FirstJoinKick-1.0.0.jar  
-      :contentReference[oaicite:3]{index=3}
+          path: target/FirstJoinKick-1.0.0.jar
