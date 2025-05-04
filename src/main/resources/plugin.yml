@@ -1,0 +1,6 @@
+name: FirstJoinKick
+main: com.example.FirstJoinKick
+version: 1.0.0
+api-version: "1.21"
+description: Kicks players on their first join with a “Please rejoin.” message.
+author: YourName
